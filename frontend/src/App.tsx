@@ -6,17 +6,14 @@ import { start } from 'repl';
 
 const App: React.FC = () => {
   const [showFocus, setShowFocus] = useState<boolean>(true);
-  const [showMove, setShowMove] = useState<boolean>(false); 
   const [isStarted, setIsStarted] = useState<boolean>(false); 
 
   const handleFocusComplete = () => {
     setShowFocus(false);
-    setShowMove(true); 
   };
 
   const handleMoveComplete = () => {
     setShowFocus(true); 
-    setShowMove(false);
   };
 
   const handleStart = () => {
@@ -25,6 +22,7 @@ const App: React.FC = () => {
   
   const handleStop = () => {
     setIsStarted(false);
+    setShowFocus(true);
   }
 
   return (
@@ -43,7 +41,7 @@ const App: React.FC = () => {
           onComplete={handleFocusComplete}
         />
       )}
-      {showMove && 
+      {!showFocus && 
       isStarted && (
         <Timer
           minutes={time_vals.move_time.minutes}
