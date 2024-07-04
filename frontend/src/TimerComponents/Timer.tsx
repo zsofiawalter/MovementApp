@@ -14,7 +14,7 @@ const Timer: React.FC<TimerProps> = ({ minutes, seconds, title, onComplete }) =>
   const [timerComplete, setTimerComplete] = useState<boolean>(false);
 
   useEffect(() => {
-    if (timerRunning && timeLeft > 0) {
+    if (timerRunning && timeLeft >= 0) {
       const timer = setTimeout(() => {
         setTimeLeft(timeLeft - 1);
       }, 1000);
