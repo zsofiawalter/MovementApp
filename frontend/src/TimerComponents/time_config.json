@@ -1,0 +1,10 @@
+{
+    "focus_time" : {
+        "minutes" : 0, 
+        "seconds" : 10
+    }, 
+    "move_time" : { 
+        "minutes" : 0, 
+        "seconds" : 5
+    }
+}

@@ -1,26 +1,65 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Timer from './TimerComponents/Timer';
+import time_vals from './TimerComponents/time_config.json'
+import "./App.css"
+import { start } from 'repl';
 
-function App() {
+const App: React.FC = () => {
+  const [showFocus, setShowFocus] = useState<boolean>(true);
+  const [showMove, setShowMove] = useState<boolean>(false); 
+  const [isStarted, setIsStarted] = useState<boolean>(false); 
+
+  const handleFocusComplete = () => {
+    setShowFocus(false);
+    setShowMove(true); 
+  };
+
+  const handleMoveComplete = () => {
+    setShowFocus(true); 
+    setShowMove(false);
+  };
+
+  const handleStart = () => {
+    setIsStarted(true);
+  }
+  
+  const handleStop = () => {
+    setIsStarted(false);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {!isStarted && (
+        <div className='title'> 
+          <div className='title-text'>Click Start to Begin!</div>
+        </div>
+      )}
+      {showFocus && 
+      isStarted && (
+        <Timer
+          minutes={time_vals.focus_time.minutes}
+          seconds={time_vals.focus_time.seconds}
+          title="Focus"
+          onComplete={handleFocusComplete}
+        />
+      )}
+      {showMove && 
+      isStarted && (
+        <Timer
+          minutes={time_vals.move_time.minutes}
+          seconds={time_vals.move_time.seconds}
+          title="Move"
+          onComplete={handleMoveComplete}
+        />
+      )}
+      {!isStarted && (
+        <button className="button" onClick={handleStart}>Start</button>
+      )}
+      {isStarted && (
+        <button className="button" onClick={handleStop}>Stop</button>
+      )}
     </div>
   );
-}
+};
 
 export default App;
