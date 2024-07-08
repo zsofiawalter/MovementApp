@@ -1,39 +1,52 @@
-import React, { useState } from 'react';
-import Timer from './TimerComponents/Timer';
-import time_vals from './TimerComponents/time_config.json'
-import "./App.css"
-import { start } from 'repl';
+import React, { useState } from "react";
+import Timer from "./TimerComponents/Timer";
+import time_vals from "./TimerComponents/time_config.json";
+import "./App.css";
+import addNotification from "react-push-notification";
 
 const App: React.FC = () => {
   const [showFocus, setShowFocus] = useState<boolean>(true);
-  const [isStarted, setIsStarted] = useState<boolean>(false); 
+  const [isStarted, setIsStarted] = useState<boolean>(false);
 
   const handleFocusComplete = () => {
     setShowFocus(false);
+    addNotification({
+      title: "Time is up!",
+      subtitle: "Movement Snack",
+      message: "Focus timer has ended",
+      duration: 10000,
+      native: true,
+    });
   };
 
   const handleMoveComplete = () => {
-    setShowFocus(true); 
+    setShowFocus(true);
+    addNotification({
+      title: "Timer is up!",
+      subtitle: "Movement Snack",
+      message: "Move timer has ended",
+      duration: 10000,
+      native: true,
+    });
   };
 
   const handleStart = () => {
     setIsStarted(true);
-  }
-  
+  };
+
   const handleStop = () => {
     setIsStarted(false);
     setShowFocus(true);
-  }
+  };
 
   return (
     <div className="App">
       {!isStarted && (
-        <div className='title'> 
-          <div className='title-text'>Click Start to Begin!</div>
+        <div className="title">
+          <div className="title-text">Click Start to Begin!</div>
         </div>
       )}
-      {showFocus && 
-      isStarted && (
+      {showFocus && isStarted && (
         <Timer
           minutes={time_vals.focus_time.minutes}
           seconds={time_vals.focus_time.seconds}
@@ -41,8 +54,7 @@ const App: React.FC = () => {
           onComplete={handleFocusComplete}
         />
       )}
-      {!showFocus && 
-      isStarted && (
+      {!showFocus && isStarted && (
         <Timer
           minutes={time_vals.move_time.minutes}
           seconds={time_vals.move_time.seconds}
@@ -51,10 +63,14 @@ const App: React.FC = () => {
         />
       )}
       {!isStarted && (
-        <button className="button" onClick={handleStart}>Start</button>
+        <button className="button" onClick={handleStart}>
+          Start
+        </button>
       )}
       {isStarted && (
-        <button className="button" onClick={handleStop}>Stop</button>
+        <button className="button" onClick={handleStop}>
+          Stop
+        </button>
       )}
     </div>
   );
