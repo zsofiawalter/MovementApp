@@ -11,9 +11,8 @@ const App: React.FC = () => {
   const handleFocusComplete = () => {
     setShowFocus(false);
     addNotification({
-      title: "Time is up!",
-      subtitle: "Movement Snack",
-      message: "Focus timer has ended",
+      title: "Focus timer ended!",
+      message: "Time to move",
       duration: 10000,
       native: true,
     });
@@ -22,9 +21,8 @@ const App: React.FC = () => {
   const handleMoveComplete = () => {
     setShowFocus(true);
     addNotification({
-      title: "Timer is up!",
-      subtitle: "Movement Snack",
-      message: "Move timer has ended",
+      title: "Movement timer ended!",
+      message: "Time to focus",
       duration: 10000,
       native: true,
     });
