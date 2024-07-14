@@ -5,10 +5,11 @@ interface TimerProps {
   minutes: number;
   seconds: number;
   title: string;
+  isFocus: boolean;
   onComplete: () => void;
 }
 
-const Timer: React.FC<TimerProps> = ({ minutes, seconds, title, onComplete }) => {
+const Timer: React.FC<TimerProps> = ({ minutes, seconds, title, isFocus, onComplete }) => {
   const [timeLeft, setTimeLeft] = useState<number>(minutes * 60 + seconds);
   const [timerRunning, setTimerRunning] = useState<boolean>(true);
   const [timerComplete, setTimerComplete] = useState<boolean>(false);
@@ -26,9 +27,11 @@ const Timer: React.FC<TimerProps> = ({ minutes, seconds, title, onComplete }) =>
     }
   }, [timeLeft, timerRunning, onComplete]);
 
+  
   const displayMinutes: string = Math.floor(timeLeft / 60).toString().padStart(2, '0');
   const displaySeconds: string = (timeLeft % 60).toString().padStart(2, '0');
 
+  
   return (
     <div className="countdown-container">
       <div className='title'>
@@ -40,6 +43,6 @@ const Timer: React.FC<TimerProps> = ({ minutes, seconds, title, onComplete }) =>
         </div>
       )}
     </div>
-  );
+    );
 };
 export default Timer;

@@ -2,22 +2,29 @@ import React, { useState } from 'react';
 import Timer from './TimerComponents/Timer';
 import time_vals from './TimerComponents/time_config.json'
 import "./App.css"
-import { start } from 'repl';
+import { get_sound } from "./SoundNotifier/SoundGetter";
 
 const App: React.FC = () => {
   const [showFocus, setShowFocus] = useState<boolean>(true);
-  const [isStarted, setIsStarted] = useState<boolean>(false); 
+  const [isStarted, setIsStarted] = useState<boolean>(false);
+
 
   const handleFocusComplete = () => {
     setShowFocus(false);
+    const moveSound = new Audio(get_sound(false).filepath)
+    moveSound.play();
   };
 
   const handleMoveComplete = () => {
-    setShowFocus(true); 
+    setShowFocus(true);
+    const focusSound = new Audio(get_sound(true).filepath);  
+    focusSound.play();
   };
 
   const handleStart = () => {
     setIsStarted(true);
+    const focusSound = new Audio(get_sound(true).filepath);  
+    focusSound.play();
   }
   
   const handleStop = () => {
@@ -38,18 +45,21 @@ const App: React.FC = () => {
           minutes={time_vals.focus_time.minutes}
           seconds={time_vals.focus_time.seconds}
           title="Focus"
+          isFocus={true}
           onComplete={handleFocusComplete}
         />
       )}
       {!showFocus && 
-      isStarted && (
+      isStarted && 
+        (
         <Timer
           minutes={time_vals.move_time.minutes}
           seconds={time_vals.move_time.seconds}
           title="Move"
+          isFocus={false}
           onComplete={handleMoveComplete}
         />
-      )}
+        )}
       {!isStarted && (
         <button className="button" onClick={handleStart}>Start</button>
       )}
